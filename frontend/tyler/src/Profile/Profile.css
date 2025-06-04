@@ -1,0 +1,14 @@
+.profile {
+    width: 100%;
+
+    text-align: center;
+    border: 1px solid aqua;
+
+}
+
+.page {
+    height: calc(100vh - 220px);
+    background-color: aqua;
+   
+}
+

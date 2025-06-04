@@ -1,0 +1,24 @@
+.AdminPage {
+    background-color: red;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-rows: 3fr 2fr;
+}
+
+.AdminItems {
+    width: 100%;
+    height: 100%;
+    
+}
+.AdminCal {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    /* border: black solid 3px; */
+    height: 100%;
+}
+
+ h2 {
+text-align: center;
+}
