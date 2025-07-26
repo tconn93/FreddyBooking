@@ -1,11 +1,16 @@
-import React from'react';
+import React, {useState} from'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Profile from '../Profile/Profile';
 import Admin from '../Admin/Admin';
+import AdminLanding from '../Admin/AdminLanding';
+import Avail from '../Admin/availability/Avail';
+import EditAvail from '../Admin/availability/edit/EditAvail';
+import AdminLogin from '../Admin/AdminLogin';
 
 
 
 function Desktop(){
+    let [admin,setAdmin] = useState(undefined);
 
 const router = createBrowserRouter([
     {
@@ -14,7 +19,17 @@ const router = createBrowserRouter([
        // element:<Admin  isMobile={false}/>
     },{
         path:'/admin',
-        element:<Admin isMobile={false}/>
+        element:<AdminLogin />
+    },{
+        path:'/admin/:artistId',
+        element: <Admin isMobile={false}/>
+    },
+    {
+        path:'/admin/:artistId/availability',
+        element:<Avail />
+    },{
+        path:'/admin/:artistId/availability/edit',
+        element: <EditAvail />
     }
 ]);
 

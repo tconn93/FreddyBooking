@@ -1,0 +1,92 @@
+ <td>
+                    {% if week.sunday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.sunday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.sunday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+
+                </td>
+                <td>
+                                   {% if week.monday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.monday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.monday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+                </td>
+                <td>
+                                   {% if week.tuesday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.tuesday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.tuesday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+                </td>
+                <td>
+                             {% if week.wednesday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.wednesday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.wednesday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+                </td>
+                <td>
+                               {% if week.thursday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.thursday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.thursday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+                </td>
+                <td>
+                                     {% if week.friday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.friday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.friday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+                </td>
+                <td>
+                              {% if week.saturday =="B"  %}
+                    <div>Booked</div>
+
+                    {%elif week.saturday=="A" %}
+                    <div>Morning Available</div>
+
+                    {%elif week.saturday=="V" %}
+                    <div>Vacation</div>
+                    {%else%}
+                    <div>N/A</div>
+                    {% endif %}
+                    </td>

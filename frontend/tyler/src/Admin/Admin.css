@@ -1,3 +1,61 @@
+
+.editAvail{
+margin-top: 25px;
+margin-right: auto;
+    margin-left: auto;
+    border: solid black 5px;
+    width: 80%;
+    background: white;
+    height: 70vh;
+}
+
+
+.editWeek{
+height: 140px;
+}
+
+
+.editTable {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.AvailPage {
+    background-color: red;
+    width: 100%;
+    height: 100vh; 
+}
+
+.availTable  td {
+    border: 1px solid black;
+    height: 50px;
+    width: 100px;
+    text-align: center;
+}
+
+
+.availTable {
+    border: 5px solid black ;
+    width: 800px;
+    margin: auto;
+}
+
+
 .AdminPage {
     background-color: red;
     width: 100%;

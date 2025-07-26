@@ -17,6 +17,8 @@ public class Artist {
     private String phone;
     @Column(name = "bio")
     private String bio;
+    @Column(name = "password")
+    private String password;
 
 
     public Long getId() {
@@ -57,5 +59,13 @@ public class Artist {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Book an Appointment</h2>
+<script src="{{ url_for('static', filename='play.js') }}"></script>
+    <label>Select Artist:
+        <select id="artist-select" required>
+                <option value="" > none</option>
+            {% for artist in artists %}
+                <option value="{{ artist }}">{{ artist }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <div id="calendar"></div>
+
+    <!-- Booking Form (hidden until day selected) -->
+    <form id="booking-form" method="POST" >
+        <table>
+        <thead>
+        <th></th>
+            {% for day in days %}
+                <th>{{day}}</th>
+            {% endfor %}
+        </thead>
+            {% for avail in availability %}
+            <tr>
+                <td>{{ avail.beginning_of_week}} AM</td>
+                <td>{{ avail.sunday }}</td>
+                <td>{{ avail.monday }}</td>
+                <td>{{ avail.tuesday }}</td>
+                <td>{{ avail.wednesday }}</td>
+                <td>{{ avail.thursday }}</td>
+                <td>{{ avail.friday }}</td>
+                <td>{{ avail.saturday }}</td>
+
+            </tr>
+
+            <tr>
+                <td>{{ avail.beginning_of_week}} PM</td>
+                <td>{{ avail.sundayPM }}</td>
+                <td>{{ avail.mondayPM }}</td>
+                <td>{{ avail.tuesdayPM }}</td>
+                <td>{{ avail.wednesdayPM }}</td>
+                <td>{{ avail.thursdayPM }}</td>
+                <td>{{ avail.fridayPM }}</td>
+                <td>{{ avail.saturdayPM }}</td>
+
+            </tr>
+        {% endfor %}
+        </table>
+        <label>Name: <input type="text" name="name" required></label><br>
+        <label>Email: <input type="email" name="email" required></label><br>
+        <input type="hidden" name="artist" id="form-artist">
+        <input type="hidden" name="date" id="form-date">
+        <label>Time:
+            <select name="time" id="time-select" required>
+                <option value="AM"> Morning</option>
+                <option value="PM"> Afternoon</option>
+                <option value="B"> All day</option>
+            </select>
+        </label><br>
+        <label>Description: <textarea name="description"></textarea></label><br>
+        <button type="submit">Book Now</button>
+    </form>
+
+
+
+    </script>
+{% endblock %}

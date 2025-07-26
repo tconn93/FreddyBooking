@@ -10,9 +10,8 @@ function Calendar(props){
 
             function changeCurrentDay(day){
                 if(day.past || day.busy ){
-                        console.log("no go")
+                        
                 }else{
-                    console.log("success")
                     let x = {
                         currentDay:day.date,
                         dayAsInt: DateUtils.getDateAsInt(day.date)
@@ -25,8 +24,8 @@ function Calendar(props){
     let next = new Date(props.state.currentDay.getFullYear(), props.state.currentDay.getMonth()+1, props.state.currentDay.getDate());
     let alwaysNextMonth =new Date()
     alwaysNextMonth.setDate(31);
-    console.log('Next Month'+alwaysNextMonth)
-    console.log(props.state.dayAsInt)
+
+
 
     return (    
     <div className="calendar" style={{textAlign:"center", width:props.appStyle.width}} >
@@ -34,7 +33,7 @@ function Calendar(props){
         <div className="calendar-header" style={{textAlign:"center", height:props.appStyle.rowHeight}}>
             
             <div className="calendar-header-item">       
-                 {DateUtils.getYearAndMonth(DateUtils.getDateAsInt(alwaysNextMonth))<=DateUtils.getYearAndMonth(props.state.dayAsInt) &&
+                 {DateUtils.getYearAndMonth(DateUtils.getDateAsInt(alwaysNextMonth))<DateUtils.getYearAndMonth(props.state.dayAsInt) &&
                         <button 
                         onClick={()=>{props.setState(
                             {currentDay:last, 

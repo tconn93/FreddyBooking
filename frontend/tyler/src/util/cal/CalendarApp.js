@@ -6,23 +6,20 @@ function CalendarApp(props){
 
     let today = new Date();
 
-    let day = today;
-    let dayAsInt = DateUtils.getDateAsInt(day);
-    console.log(dayAsInt);
-    
-        // const [state,setState] = useState({
-        //     currentDay: day,
-        //     dayAsInt: dayAsInt
-        // });
-        function handleClick(){
-            props.setIsBan(true);
+    useEffect(()=>{
+        let x = undefined
+        if(DateUtils.getDateAsInt(props.state.currentDay)<=DateUtils.getDateAsInt(new Date())){
+            let nextDay = DateUtils.getNextDay(new Date())
+            x ={
+                currentDay:nextDay,
+                dayAsInt:DateUtils.getDateAsInt(nextDay)
+
+            }
+            
         }
-       
-    
+        if(x!== undefined) props.setState(x);
+    },[props.state])
    
-    
-  
-    
     return (
         <div className="" >
             <div className="calendarGrid">

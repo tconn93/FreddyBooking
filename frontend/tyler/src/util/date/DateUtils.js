@@ -30,7 +30,8 @@ class DateUtils {
    }
 
    static getNextDay(date){
-    return date.setDate(date.getDate()+1)
+     date.setDate(date.getDate()+1);
+     return date;
    }
    }
    export default DateUtils;

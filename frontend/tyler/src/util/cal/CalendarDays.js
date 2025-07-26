@@ -13,18 +13,17 @@ function CalendarDays(props){
 
 
         async function getAppointments(){
-        let result =  await fetch('http://localhost:8080/appointment')
-        .then(res=>res.json())
-        .then(data=>{
+        // let result =  await fetch('http://localhost:8080/appointment')
+        // .then(res=>res.json())
+        // .then(data=>{
 
-        return data;
-        }).catch(err=>{
-        console.log(err);
-        return undefined;
-        });
-        if(result!== undefined && result.status === undefined){
-            setAppointments(result);
-        }
+        // return data;
+        // }).catch(err=>{
+        // return undefined;
+        // });
+        // if(result!== undefined && result.status === undefined){
+        //     setAppointments(result);
+        // }
 
 
         }
@@ -58,13 +57,7 @@ function CalendarDays(props){
             let past = dateAsInt <= todayAsInt;
            
 
-            // if(dateAsInt===20240824||dateAsInt===20240827||dateAsInt===20240828){
-            //     console.log(appointments.map((app)=>app.date))
-            //     console.log("date: "+dateAsInt)
-            // console.log("busy is "+busy)
-            // console.log("past is "+past)
-            // console.log("weekend is "+weekend)
-            // }
+         
             let calendarDay = {
             currentMonth: (firstDayOfMonth.getMonth() === props.day.currentDay.getMonth()),
             date: (new Date(firstDayOfMonth)),
@@ -77,7 +70,7 @@ function CalendarDays(props){
             dateAsInt: dateAsInt
             
         }
-        if(calendarDay.selected)console.log(calendarDay);
+     
         currentDays.push(calendarDay);
 
         }
@@ -96,8 +89,6 @@ function CalendarDays(props){
         if(displayDates!==undefined){
         displayDates.forEach((date)=>{
         if(date.dateAsInt===props.day.dayAsInt){
-        console.log("selected Date")
-        console.log(date)
         date.selected = true;
         }
         });
