@@ -24,6 +24,25 @@ height: 140px;
     height: 40vh;
 }
 
+.btn {
+    background-color: black;
+    color: white;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    width: 100px;
+    display: inline-block;
+}
+
+.sect{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: inline-block;
+   
+}
+
 .OtherList form{
 margin-top: 50px;
 }

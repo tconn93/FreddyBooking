@@ -6,6 +6,7 @@ import Avail from '../Admin/availability/Avail';
 import EditAvail from '../Admin/availability/edit/EditAvail';
 import AdminLogin from '../Admin/AdminLogin';
 import OtherArtist from '../Admin/otherartist/OtherArtist';
+import BookRequest from '../Admin/bookrequest/BookRequest';
 
 
 
@@ -27,6 +28,9 @@ const router = createBrowserRouter([
         path:'/admin/:artistId/others',
         element: <OtherArtist />
 
+    },{
+        path: '/admin/:artistId/bookRequest',
+        element: <BookRequest />
     },
     {
         path:'/admin/:artistId/availability',

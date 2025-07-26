@@ -8,6 +8,7 @@ import Avail from "./availability/Avail";
 import WebUtils from "../util/web/WebUtils";
 import OtherArtist from "./otherartist/OtherArtist";
 import dayjs from "dayjs";
+import BookRequest from "./bookrequest/BookRequest";
 
 
 function Admin(props){
@@ -26,19 +27,12 @@ function Admin(props){
         currentDay: day,
         dayAsInt: dayAsInt
     });
+    const [bookingRequests,setBookingRequests] = useState([]);
 
                 useEffect(()=>{
-                   // getArtist();
                     getAvails();
+                    getBookingRequest();
                 },[]);
-
-    async function getArtist(){
-        let x = await WebUtils.getArtist(artistId);
-        if(x=== undefined){
-            alert('Issue getting Artist Details')
-        } else {
-            setArtist(x); }
-    }
 
     async function getAvails(){
         let x = await WebUtils.getAvails(artistId);
@@ -49,9 +43,7 @@ function Admin(props){
             setArtist(x.artist);
         }
     }
-
     function convertAvails(availabilities){
-
         let result =[];
         for (const avail of availabilities){
             let days =[];
@@ -62,13 +54,25 @@ function Admin(props){
             days.push( sun.add(3,'day'));
             days.push( sun.add(4,'day'));
             days.push( sun.add(5,'day'));
-            days.push( sun.add(6,'day'));
-           
-            let av = {days:days,avail:avail};
-  
+            days.push( sun.add(6,'day'));           
+            let av = {days:days,avail:avail};  
             result.push(av);
         }
         setAvails(result);
+    }
+
+    async function getBookingRequest(){
+        let x = await WebUtils.getBookingRequest(artistId);
+        if (x===undefined){
+            alert('Issue getting Booking Request')
+        }else{
+            let j = [];
+
+            for( const y of x){
+                j.push(y);
+            }
+            setBookingRequests(j);
+        }
     }
 
     let mobileAppStyle ={
@@ -112,7 +116,10 @@ function Admin(props){
                     >Availability</Link></h2>
                 </div>
                 <div className="AdminItems"> 
-                    <h2>Booking Request</h2>
+                    <h2><Link to={'/admin/'+artistId+'/bookRequest'}
+                    component={<BookRequest />}>Booking Request</Link></h2>
+                        {bookingRequests.length>0 && (<span>{bookingRequests.length} New Request</span>)}
+                    <h2>Bookings</h2>
                 </div>
                 <div className="AdminItems">              
                     <button 

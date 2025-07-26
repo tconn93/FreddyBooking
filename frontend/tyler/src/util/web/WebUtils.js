@@ -12,6 +12,14 @@ class WebUtils {
         console.error(err);
     });
   }
+  static getBookingRequest(artistId){
+    let url = this.backendURL+'bookingRequest/'+artistId;
+    let options = {
+        method:'GET',
+        headers:{'Content-Type':'application/json'
+                ,'Access-Control-Allow-Origin':'http://localhost:3000'} };
+    return this.pingServer(url,options);
+  }
   static saveNewArtist(newArtist){
     let url = this.backendURL+'artist';
     let options = {

@@ -221,6 +221,7 @@ def saveBookingRequest():
     bookingRequest.artist_id = data['artistId']
     bookingRequest.name = data['name']
     bookingRequest.description = data['description']
+    bookingRequest.phone = data['phone']
     db.session.add(bookingRequest)
     db.session.commit()
     return bookingRequest.to_dict() , 200 if bookingRequest.id else 201
