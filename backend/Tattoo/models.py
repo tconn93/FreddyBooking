@@ -91,3 +91,24 @@ class Booking(db.Model):
                 'date':self.date,
                 'time':self.time,
                 'description':self.description}
+
+
+class BookingRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    time = db.Column(db.String(20), nullable=False)  # e.g., "10:00 AM"
+    description = db.Column(db.Text, nullable=True)
+
+    def __repr__(self):
+        return f'<Booking {self.name} - {self.date}>'
+    def to_dict(self):
+        return {'id':self.id,
+                'name':self.name,
+                'email':self.email,
+                'artist':self.artist_id,
+                'date':self.date,
+                'time':self.time,
+                'description':self.description}

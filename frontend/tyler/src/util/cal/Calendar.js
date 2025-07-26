@@ -9,7 +9,7 @@ function Calendar(props){
 
 
             function changeCurrentDay(day){
-                if(day.past || day.busy ){
+                if(day.past  ){
                         
                 }else{
                     let x = {
@@ -64,7 +64,8 @@ function Calendar(props){
                 day={props.state} 
                 changeCurrentDay={(day)=>changeCurrentDay(day)} 
                 today={props.today}
-                appStyle={props.appStyle} />
+                appStyle={props.appStyle} 
+                avails={props.avails}/>
         </div>  
     </div>)
 

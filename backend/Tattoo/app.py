@@ -7,7 +7,7 @@ from flask_cors import CORS, cross_origin
 from sqlalchemy.exc import IntegrityError
 from wtforms.validators import email
 
-from models import db, Artist, Availability, Booking
+from models import db, Artist, Availability, Booking, BookingRequest
 
 from datetime import datetime, timedelta, date
 
@@ -211,10 +211,28 @@ def book():
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     return render_template('book.html', artists=artists, availability=availability,days=days)
 
-@app.route('/admin')
-def admin():
-    bookings = Booking.query.order_by(Booking.date).all()
-    return render_template('admin.html', bookings=bookings)
+@app.route('/bookingRequest',methods=['POST'])
+def saveBookingRequest():
+    data = request.get_json();
+    bookingRequest = BookingRequest()
+    bookingRequest.email = data['email']
+    bookingRequest.date = datetime.strptime(data['date'], '%m/%d/%Y').date()
+    bookingRequest.time = data['time']
+    bookingRequest.artist_id = data['artistId']
+    bookingRequest.name = data['name']
+    bookingRequest.description = data['description']
+    db.session.add(bookingRequest)
+    db.session.commit()
+    return bookingRequest.to_dict() , 200 if bookingRequest.id else 201
+
+@app.route('/bookingRequest/<int:artist_id>',methods=['GET'])
+def getBookingRequest(artist_id):
+    bookingRequests = BookingRequest.query.filter_by(artist_id=artist_id)
+    x = []
+    for book in bookingRequests:
+        x.append(book.to_dict())
+    return x, 200
+
 
 @app.route('/delete_booking/<int:id>', methods=['POST'])
 def delete_booking(id):

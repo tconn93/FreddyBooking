@@ -7,10 +7,12 @@ import './Admin.css';
 import Avail from "./availability/Avail";
 import WebUtils from "../util/web/WebUtils";
 import OtherArtist from "./otherartist/OtherArtist";
+import dayjs from "dayjs";
 
 
 function Admin(props){
-    let [artist,setArtist] = useState(undefined)
+    let [artist,setArtist] = useState(undefined);
+    let [avails,setAvails] = useState(undefined);
     const {artistId} = useParams();
     let today = new Date();
     let day = today;
@@ -26,7 +28,8 @@ function Admin(props){
     });
 
                 useEffect(()=>{
-                    getArtist();
+                   // getArtist();
+                    getAvails();
                 },[]);
 
     async function getArtist(){
@@ -36,6 +39,38 @@ function Admin(props){
         } else {
             setArtist(x); }
     }
+
+    async function getAvails(){
+        let x = await WebUtils.getAvails(artistId);
+        if(x===undefined){
+            alert('Issue getting Availabilities')
+        }else{
+            convertAvails(x.avails);
+            setArtist(x.artist);
+        }
+    }
+
+    function convertAvails(availabilities){
+
+        let result =[];
+        for (const avail of availabilities){
+            let days =[];
+            let sun = dayjs(new Date(avail.beginning_of_week));
+            days.push(sun)
+            days.push( sun.add(1,'days'));
+            days.push( sun.add(2,'days'));
+            days.push( sun.add(3,'day'));
+            days.push( sun.add(4,'day'));
+            days.push( sun.add(5,'day'));
+            days.push( sun.add(6,'day'));
+           
+            let av = {days:days,avail:avail};
+  
+            result.push(av);
+        }
+        setAvails(result);
+    }
+
     let mobileAppStyle ={
         width:'100%',
         rowHeight:'40px',
@@ -63,7 +98,8 @@ function Admin(props){
                 <div className="AdminCal"> 
                         <CalendarApp appStyle={props.isMobile?mobileAppStyle:desktopAppStyle}
                         state={state} 
-                        setState={(x)=>setState(x)} />
+                        setState={(x)=>setState(x)} 
+                        avails={avails}/>
                 </div>
                 <div className="AdminItems">
                     <h2>Agenda for </h2>

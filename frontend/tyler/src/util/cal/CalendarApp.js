@@ -28,6 +28,7 @@ function CalendarApp(props){
                         setState={(x)=>props.setState(x)} 
                         today={DateUtils.getDateAsInt(today)} 
                         appStyle={props.appStyle}
+                        avails={props.avails}
                         />                
                     </div>                                
             </div>
