@@ -40,7 +40,7 @@ with app.app_context():
 def login():
     if request.is_json:
         data = request.json
-        artist = Artist.query.filter_by(email=data['email']).first()
+        artist = Artist.query.filter_by(email=data['email'].upper()).first()
         if artist and artist.check_password(data['pword']):
             login_user(artist)
             result = {"message":"Success","artist":artist.to_dict(),"response": 200}
@@ -62,14 +62,22 @@ def artist():
         return jsonify({'error':'Missing required fields'}),400
     new_artist = Artist( )
     new_artist.name = data['name']
-    new_artist.email = data['email']
-    new_artist.isOwner = data['isOwner']
+    new_artist.email = data['email'].upper()
+    new_artist.isOwner = data['isOwner']=='Y'
     new_artist.set_password(data['pword'])
     db.session.add(new_artist)
     db.session.commit()
 
     return jsonify(new_artist.to_dict()), 201
 
+
+@app.route('/artist',methods=['GET'])
+def getAllArtist():
+    artists = Artist.query.all()
+    x = []
+    for art in artists:
+        x.append(art.to_dict())
+    return jsonify(x), 200
 
 
 @app.route('/artist/<int:artist_id>')

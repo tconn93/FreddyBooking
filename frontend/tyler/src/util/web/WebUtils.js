@@ -4,93 +4,75 @@
 class WebUtils {
   static backendURL = "http://localhost:5000/";
 
-
-
-
-
-  static saveAvail(avail, artistId){
-    let url = this.backendURL+'availability/'+artistId+'/edit';
-    const result = fetch(url,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000'},
-            body:JSON.stringify(avail)
-    })
+  static pingServer(url,options){
+    return fetch(url,options)
     .then(resp => resp.json())
     .then(data=> data)
     .catch((err)=>{
         console.error(err);
     });
-
-    return result;
-
+  }
+  static saveNewArtist(newArtist){
+    let url = this.backendURL+'artist';
+    let options = {
+        method:'POST',
+        headers:{'Content-Type':'application/json'
+                ,'Access-Control-Allow-Origin':'http://localhost:3000'},
+        body: JSON.stringify(newArtist) };
+    return this.pingServer(url,options);
+  }
+  static saveAvail(avail, artistId){
+    let url = this.backendURL+'availability/'+artistId+'/edit';
+    let options = {
+        method:'POST',
+        headers:{'Content-Type':'application/json'
+                ,'Access-Control-Allow-Origin':'http://localhost:3000'},
+        body:JSON.stringify(avail) };
+    return this.pingServer(url,options);
   }
 
-
+  static getOthers(){
+    let url = this.backendURL+'artist';
+    let option = {
+        method:'GET',
+        headers:{'Content-Type':'application/json'
+                ,'Access-Control-Allow-Origin':'http://localhost:3000'}};
+    return this.pingServer(url,option);
+  }
 
   static getArtist(artistId){
     let url = this.backendURL+'artist/'+artistId;
-    const result = fetch(url,{
+    let option = { 
         method:'GET',
         headers:{'Content-Type':'application/json'
-                        ,'Access-Control-Allow-Origin':'http://localhost:3000'}
-    })
-    .then(resp => resp.json())
-    .then(data=> data)
-    .catch((err)=>{
-        console.error(err);
-    });
-
-    return result;
+                ,'Access-Control-Allow-Origin':'http://localhost:3000'}};
+    return this.pingServer(url,option);
   }
 
   static getAvails(artistId){
     let url = this.backendURL+'availability/'+artistId;
-
-    const result = fetch(url,{
-                    method:'GET',
-                    headers:{
-                        'Content-Type':'application/json'
-                        ,'Access-Control-Allow-Origin':'http://localhost:3000'
-                    }
-
-                    }).then(resp => resp.json())
-                    .then(data =>data)
-                    .catch((err)=>{
-                        console.error(err)
-                    });
-                return result;
+    let options ={
+        method:'GET',
+        headers:{
+            'Content-Type':'application/json'
+            ,'Access-Control-Allow-Origin':'http://localhost:3000'}};
+    return this.pingServer(url,options);
   }
-
 
   static   login(email, pword){
             let url = this.backendURL+'login';
             const myData = {
                 email:email,
-                pword:pword
+                pword:pword };
+            let options = {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                    ,'Access-Control-Allow-Origin':'http://localhost:3000'
+                },
+                body: JSON.stringify(myData) };
+           return this.pingServer(url,options);
             }
-            console.log(JSON.stringify(myData));
-
-            const result =  fetch(url,{
-                                    method:'POST',
-                                    headers:{
-                                        'Content-Type':'application/json'
-                                        ,'Access-Control-Allow-Origin':'http://localhost:3000'
-                                    },
-                                    body: JSON.stringify(myData)
-                                }) 
-                                .then( resp=> resp.json())
-                                .then(data =>  {
-                                    return data;
-                                })
-                                .catch((err)=>{
-                                    console.error(err);
-                                });
-
-            return result;
-            }
-
-
 }
 
 export default WebUtils;

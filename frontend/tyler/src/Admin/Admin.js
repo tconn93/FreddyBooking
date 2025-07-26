@@ -6,18 +6,16 @@ import DateUtils from "../util/date/DateUtils";
 import './Admin.css';
 import Avail from "./availability/Avail";
 import WebUtils from "../util/web/WebUtils";
+import OtherArtist from "./otherartist/OtherArtist";
 
 
 function Admin(props){
     let [artist,setArtist] = useState(undefined)
     const {artistId} = useParams();
     let today = new Date();
-
     let day = today;
     let dayAsInt = DateUtils.getDateAsInt(day);
-
     const navigate = useNavigate();
-    
     const weekdays = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
     const mobileWeekdays = ["S","M", "T", "W", "T", "F","S"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];;
@@ -27,47 +25,34 @@ function Admin(props){
         dayAsInt: dayAsInt
     });
 
-    useEffect(()=>{
-        getArtist();
-    },[]);
+                useEffect(()=>{
+                    getArtist();
+                },[]);
 
     async function getArtist(){
-
         let x = await WebUtils.getArtist(artistId);
         if(x=== undefined){
             alert('Issue getting Artist Details')
         } else {
-            setArtist(x);
-        }
-
+            setArtist(x); }
     }
-
     let mobileAppStyle ={
         width:'100%',
         rowHeight:'40px',
         weekdays:mobileWeekdays,
         months: mobileMonths
     };
-
     let desktopAppStyle = {
         width:'100%',
         rowHeight:'60px',
         weekdays: weekdays,
         months:months
     }
-
     const availUrl = (x) =>{
         return "/admin/"+artist.id+"/availability";
     }
-
-   
-
-
     const loading = () =>{
-
-        return <div>
-
-        </div>
+        return <div></div>;
     }
 
     if(artist===undefined)
@@ -83,9 +68,7 @@ function Admin(props){
                 <div className="AdminItems">
                     <h2>Agenda for </h2>
                     <h2>{state.currentDay.getMonth()+1}/{state.currentDay.getDate()}/{state.currentDay.getFullYear()}</h2>
-                    <h2>{artist !== undefined && artist.name}
-                        </h2>
-                
+                    <h2>{artist !== undefined && artist.name}</h2>               
                 </div>
                 <div className="AdminItems"> 
                     <h2><Link to={availUrl()}
@@ -95,19 +78,21 @@ function Admin(props){
                 <div className="AdminItems"> 
                     <h2>Booking Request</h2>
                 </div>
-                <div className="AdminItems"> 
-             
+                <div className="AdminItems">              
                     <button 
                         onClick={()=>navigate(-1)}
-                        >
-                            Log Out
-                        </button>
+                        >Log Out
+                    </button>
                         {artist.isOwner &&
-                        <h2>Other Artists</h2>
+                            <h2>
+                            <Link to={'/admin/'+artistId+'/others'}
+                            component={<OtherArtist />}
+                            >Other Artists
+                            </Link></h2>
                         }
                 </div>
         </div>
-    )
+    );
 
 }
 

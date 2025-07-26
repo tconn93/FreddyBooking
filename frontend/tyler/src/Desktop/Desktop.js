@@ -2,10 +2,10 @@ import React, {useState} from'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Profile from '../Profile/Profile';
 import Admin from '../Admin/Admin';
-import AdminLanding from '../Admin/AdminLanding';
 import Avail from '../Admin/availability/Avail';
 import EditAvail from '../Admin/availability/edit/EditAvail';
 import AdminLogin from '../Admin/AdminLogin';
+import OtherArtist from '../Admin/otherartist/OtherArtist';
 
 
 
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
     },{
         path:'/admin/:artistId',
         element: <Admin isMobile={false}/>
+    },{
+        path:'/admin/:artistId/others',
+        element: <OtherArtist />
+
     },
     {
         path:'/admin/:artistId/availability',
