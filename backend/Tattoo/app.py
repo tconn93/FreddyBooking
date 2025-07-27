@@ -16,12 +16,11 @@ app.config['SECRET_KEY'] = 'CyborgTattoo'  # Change this to a random string
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Bandit@192.168.0.131:5432/tattoodustin'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
-CORS(app)
-# CORS(app,resources={r"/*":{"origins":["http://localhost:3000"],
-#                            "methods": ["GET", "POST", "PUT", "DELETE"],
-#                            "allow_headers": ["Content-Type", "Authorization"],
-#                            "supports_credentials": True
-#                            }})
+#CORS(app)
+CORS(app,resources={r"/*":{"origins":["http://localhost:3000"],
+                           "methods": ["GET", "POST", "PUT", "DELETE","OPTIONS"],
+                           "allow_headers": ["Content-Type","Access-Control-Allow-Origin","Access-Control-Allow-Methods"]
+                           }})
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -36,7 +35,6 @@ with app.app_context():
 
 
 @app.route('/login', methods=['POST'])
-@cross_origin()
 def login():
     if request.is_json:
         data = request.json
@@ -175,41 +173,17 @@ def save_availability(artist_id):
 # def home():
 #     return render_template('index.html')
 
-@app.route('/book', methods=['GET', 'POST'])
-def book():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        artist = request.form['artist']
-        date_str = request.form['date']
-        time = request.form['time']
-        description = request.form.get('description', '')
+@app.route('/book/<int:id>', methods=['GET'])
+def book(id):
+    books = Booking.query.filter_by(artist_id=id)
+    x = []
+    for j in books:
+        x.append(j.to_dict())
 
-        try:
-            date = datetime.strptime(date_str, '%Y-%m-%d').date()
-        except ValueError:
-            flash('Invalid date format.', 'error')
-            return redirect(url_for('book'))
+    return jsonify(x), 200
 
-        # Check if slot is available (simple check: no duplicate booking for artist/date/time)
-        existing = Booking.query.filter_by(artist=artist, date=date, time=time).first()
-        if existing:
-            flash('Slot already booked. Choose another.', 'error')
-            return redirect(url_for('book'))
 
-        new_booking = Booking(name=name, email=email, artist=artist, date=date, time=time, description=description)
-        db.session.add(new_booking)
-        db.session.commit()
-        flash('Booking successful! We\'ll contact you soon.', 'success')
-        return redirect(url_for('home'))
 
-    artists = Artist.query.all()
-    availability = Availability.query.order_by(Availability.beginning_of_week).all()
-    print("artists' ids")
-    for art in artists:
-        print(art.id)
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    return render_template('book.html', artists=artists, availability=availability,days=days)
 
 @app.route('/bookingRequest',methods=['POST'])
 def saveBookingRequest():
@@ -235,13 +209,42 @@ def getBookingRequest(artist_id):
     return x, 200
 
 
-@app.route('/delete_booking/<int:id>', methods=['POST'])
+
+@app.route('/bookRequest/<int:id>',methods=['POST'])
+def accepBooking(id):
+    bookingRequest = BookingRequest.query.get_or_404(id)
+    book = Booking(email=bookingRequest.email,name=bookingRequest.name,
+                   phone=bookingRequest.phone, date=bookingRequest.date,
+                   time=bookingRequest.time, artist_id=bookingRequest.artist_id,
+                   description=bookingRequest.description)
+    db.session.add(book)
+    db.session.delete(bookingRequest)
+    db.session.commit()
+    return jsonify(book.to_dict()), 200 if book.id else 201
+
+@app.route('/bookRequest/<int:id>',methods=['DELETE','OPTIONS'])
+def deleteBooking(id):
+    book = BookingRequest.query.get_or_404(id)
+    db.session.delete(book)
+    db.session.commit()
+    return book.to_dict(), 200
+
+@app.route('/book/artist',methods=['POST'])
+def getBooksByArtistAndDate():
+    data = request.get_json()
+    date = datetime.strptime(data['date'],'%m/%d/%Y').date()
+    books = Booking.query.filter_by(artist_id=data['artistId'], date=date)
+    x = []
+    for j in books:
+        x.append(j.to_dict())
+    return x , 200
+
+@app.route('/delete_booking/<int:id>', methods=['DELETE'])
 def delete_booking(id):
     booking = Booking.query.get_or_404(id)
     db.session.delete(booking)
     db.session.commit()
-    flash('Booking deleted.', 'success')
-    return redirect(url_for('admin'))
+    return booking.to_dict(), 200
 
 
 def generate_slots(avail_type):

@@ -19,7 +19,7 @@ return (admin!== undefined
                         isMobile={props.isMobile} 
                         setAdmin={(x)=> setAdmin(x)} 
                         />
-                :   <AdminLogin setAdmin={(x)=> setAdmin(x)} 
+                :   <AdminLogin 
                         />)
 }
 

@@ -9,11 +9,13 @@ import WebUtils from "../util/web/WebUtils";
 import OtherArtist from "./otherartist/OtherArtist";
 import dayjs from "dayjs";
 import BookRequest from "./bookrequest/BookRequest";
+import Booking from "./books/Booking";
 
 
 function Admin(props){
-    let [artist,setArtist] = useState(undefined);
-    let [avails,setAvails] = useState(undefined);
+    const [artist,setArtist] = useState(undefined);
+    const [avails,setAvails] = useState(undefined);
+    const [books,setBooks] = useState([]);
     const {artistId} = useParams();
     let today = new Date();
     let day = today;
@@ -27,12 +29,44 @@ function Admin(props){
         currentDay: day,
         dayAsInt: dayAsInt
     });
+    const [others,setOthers] = useState([]);
     const [bookingRequests,setBookingRequests] = useState([]);
+    const [currDayBooks,setCurrDayBooks] = useState([]);
 
                 useEffect(()=>{
                     getAvails();
                     getBookingRequest();
+                    getBooks();
+                    getOthers();
+                    
                 },[]);
+
+                useEffect(()=>{
+                    getBooksByArtistAndDate();
+                },[state]);
+
+
+
+    async function getBooksByArtistAndDate(){
+
+        let a = state.currentDay;
+        let dateStr = (a.getMonth()+1)+'/'+(a.getDate())+'/'+a.getFullYear();
+        let x = await WebUtils.getBookByArtistAndDate(artistId,dateStr);
+
+        if(x===undefined){
+            alert('Issue getting Books By date.')
+        }else{          
+            setCurrDayBooks(x);
+        }
+
+    }            
+    async function getOthers(){
+        let x = await WebUtils.getOthers();
+        if(x===undefined)
+            alert('Issue getting other Artist')
+        else
+            setOthers(x);
+    }
 
     async function getAvails(){
         let x = await WebUtils.getAvails(artistId);
@@ -59,6 +93,14 @@ function Admin(props){
             result.push(av);
         }
         setAvails(result);
+    }
+    async function getBooks(){
+        let x = await WebUtils.getBooks(artistId);
+        if(x===undefined){
+            alert('Issue getting Books')
+        }else {
+            setBooks(x);
+        }
     }
 
     async function getBookingRequest(){
@@ -108,7 +150,23 @@ function Admin(props){
                 <div className="AdminItems">
                     <h2>Agenda for </h2>
                     <h2>{state.currentDay.getMonth()+1}/{state.currentDay.getDate()}/{state.currentDay.getFullYear()}</h2>
-                    <h2>{artist !== undefined && artist.name}</h2>               
+                    <h2>{artist !== undefined && artist.name}</h2>
+                   
+                        {currDayBooks.length > 0 && (<div>
+                            {currDayBooks.length} appointments Today
+                        </div>)}
+                      { currDayBooks.map((book)=>{
+
+                        return(<table key={book.id}>
+                            <tbody>
+                                <tr>
+                                    <td>{book.name}</td>
+                                    <td>{book.email}</td>
+                                </tr>
+                            </tbody>
+                        </table>)
+                      })}
+                                  
                 </div>
                 <div className="AdminItems"> 
                     <h2><Link to={availUrl()}
@@ -118,8 +176,16 @@ function Admin(props){
                 <div className="AdminItems"> 
                     <h2><Link to={'/admin/'+artistId+'/bookRequest'}
                     component={<BookRequest />}>Booking Request</Link></h2>
+                        <div style={{textAlign:'center'}}>
                         {bookingRequests.length>0 && (<span>{bookingRequests.length} New Request</span>)}
-                    <h2>Bookings</h2>
+                        </div>
+                    <br/>
+                    <h2><Link to={'/admin/'+artistId+'/bookings'}
+                        component={<Booking />}
+                    >Bookings</Link></h2>
+                        <div style={{textAlign:'center'}}>
+                        {books.length > 0 && (<span>{books.length} Booked Appointments</span>)}
+                        </div>
                 </div>
                 <div className="AdminItems">              
                     <button 
@@ -127,11 +193,16 @@ function Admin(props){
                         >Log Out
                     </button>
                         {artist.isOwner &&
+                            <div>
                             <h2>
                             <Link to={'/admin/'+artistId+'/others'}
                             component={<OtherArtist />}
                             >Other Artists
                             </Link></h2>
+                            <div style={{textAlign:'center'}}>
+                            {others.length>1 && (<span >{others.length-1} other Artist</span>)}
+                            </div>
+                            </div>
                         }
                 </div>
         </div>

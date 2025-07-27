@@ -12,6 +12,49 @@ class WebUtils {
         console.error(err);
     });
   }
+  static getBookByArtistAndDate(artistId, dateStr){
+    let url = this.backendURL+'book/artist';
+    let data ={artistId:artistId, date:dateStr}
+    let options={method:'POST',
+        headers:{'Content-Type':'application/json'
+            ,'Access-Control-Allow-Origin':'http://localhost:3000'},
+        body: JSON.stringify(data)};
+    return this.pingServer(url,options);
+  }
+  static deleteBook(bookId){
+    let url = this.backendURL+'delete_booking/'+bookId;
+    let options = {
+        method:'DELETE',
+        headers:{'Content-Type':'application/json'
+            ,'Access-Control-Allow-Origin':'http://localhost:3000',
+            'Access-Control-Allow-Methods':'DELETE'} };
+    return this.pingServer(url,options);
+  }
+  static getBooks(artistId){
+    let url = this.backendURL+'book/'+artistId;
+    let options ={
+        method:'GET',
+        headers:{'Content-Type':'application/json'
+            ,'Access-Control-Allow-Origin':'http://localhost:3000'} };
+    return this.pingServer(url,options);
+  }
+  static deleteBookRequest(bookId){
+    let url = this.backendURL+'bookRequest/'+bookId;
+    let options = {
+        method:'DELETE',
+        headers:{'Content-Type':'application/json'
+            ,'Access-Control-Allow-Origin':'http://localhost:3000',
+            'Access-Control-Allow-Methods':'DELETE'} };
+    return this.pingServer(url,options);
+  }
+  static confirmBook(bookId){
+    let url = this.backendURL+'bookRequest/'+bookId;
+    let options = {
+        method:'POST',
+        headers:{'Content-Type':'application/json'
+            ,'Access-Control-Allow-Origin':'http://localhost:3000'} };
+    return this.pingServer(url,options);
+  }
   static getBookingRequest(artistId){
     let url = this.backendURL+'bookingRequest/'+artistId;
     let options = {

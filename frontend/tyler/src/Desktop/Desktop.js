@@ -7,6 +7,7 @@ import EditAvail from '../Admin/availability/edit/EditAvail';
 import AdminLogin from '../Admin/AdminLogin';
 import OtherArtist from '../Admin/otherartist/OtherArtist';
 import BookRequest from '../Admin/bookrequest/BookRequest';
+import Booking from '../Admin/books/Booking';
 
 
 
@@ -38,6 +39,9 @@ const router = createBrowserRouter([
     },{
         path:'/admin/:artistId/availability/edit',
         element: <EditAvail />
+    },{
+        path:'/admin/:artistId/bookings',
+        element: <Booking />
     }
 ]);
 

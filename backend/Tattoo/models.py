@@ -80,6 +80,7 @@ class Booking(db.Model):
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.String(20), nullable=False)  # e.g., "10:00 AM"
     description = db.Column(db.Text, nullable=True)  # Tattoo details
+    phone = db.Column(db.String(10), nullable=True)
 
     def __repr__(self):
         return f'<Booking {self.name} - {self.date}>'
@@ -90,7 +91,8 @@ class Booking(db.Model):
                 'artist':self.artist_id,
                 'date':self.date,
                 'time':self.time,
-                'description':self.description}
+                'description':self.description,
+                'phone':self.phone}
 
 
 class BookingRequest(db.Model):
