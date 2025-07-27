@@ -37,3 +37,21 @@
     height: 20px;
     background-color: black;
 }
+
+
+.aboutFrame {
+    border: 5px solid black;
+    height: 100vh;
+    background-color: aqua;
+}
+
+.aboutPicFrame {
+    border: 5px solid black;
+    height: 30vh;
+    width: 400px;
+    margin-top: 75px;
+    margin-left: 75px;
+    display: block;
+    
+    align-content: center;
+}

@@ -69,6 +69,10 @@ getAvails()
         }
     }
 
+    async function deleteAvail(availId){
+        
+    }
+
 
 
     async function save() {

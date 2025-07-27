@@ -21,7 +21,7 @@ function Profile(){
                         <p><a href='https://www.instagram.com/dustinwtattoos/'>    <img
                            width={'25px'}
                            height={'25px'}
-                           src={insta} /><h3 style={{display:'inline'}} > : dustinwtattos</h3></a>
+                           src={insta} /><span style={{display:'inline',fontWeight:'bold',fontSize:'25px'}} > : dustinwtattos</span></a>
                         </p>
                     </div>
                 </div>

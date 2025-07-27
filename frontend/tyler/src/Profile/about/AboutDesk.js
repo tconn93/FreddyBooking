@@ -7,7 +7,13 @@ function AboutDesk(){
             <Menu />
             <div className="page">
                 <div className="profile">
-                <h1>About Desk</h1>
+                <h1>About Dustin</h1>
+                <div className="aboutFrame">
+                    <div className="aboutPicFrame">
+                        <div>future profile pic here</div>
+                    </div>
+                
+                </div>
                 </div>
             </div>
     </div>)
