@@ -208,6 +208,19 @@ def getBookingRequest(artist_id):
         x.append(book.to_dict())
     return x, 200
 
+@app.route('/avails/artist',methods=['GET'])
+def getArtistsWithAvail():
+    artists = Artist.query.all()
+    availabilities = Availability.query.all()
+    availArtIds = []
+    results = []
+    for avail in availabilities:
+        availArtIds.append(avail.artist_id)
+    for artist in artists:
+        if artist.id in availArtIds:
+            results.append(artist.to_dict())
+    return results , 200
+
 
 
 @app.route('/bookRequest/<int:id>',methods=['POST'])

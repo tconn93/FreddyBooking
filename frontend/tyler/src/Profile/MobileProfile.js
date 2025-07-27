@@ -1,9 +1,7 @@
 import React from'react';
 import './MobileProfile.css';
 import MobileMenu from '../util/menu/MobileMenu';
-import work1 from '../dustin1.png'
-import work2 from '../dustin2.png';
-import work3 from '../dustin3.png';
+
 
 function MobileProfile(){
     return(
@@ -22,12 +20,7 @@ function MobileProfile(){
                         </p>
                     </div>
 
-                    <div>
-                        <h5 >Works:</h5>
-                        <img src={work1} alt='tattoo' className='work'/>
-                        <img src={work2} alt='tattoo' className='work'/>
-                        <img src={work3} alt='tattoo' className='work'/>
-                    </div>
+    
                 </div>
                 </div>
            

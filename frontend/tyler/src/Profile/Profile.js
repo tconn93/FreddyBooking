@@ -1,7 +1,8 @@
 import React from'react';
 import './Profile.css';
 import Menu from '../util/menu/Menu';
-import work1 from '../dustin1.png'
+import insta from '../insta.png';
+
 
 
 function Profile(){
@@ -16,14 +17,12 @@ function Profile(){
                     <h2 style={{fontSize:'x-large'}}>with a focus on</h2>
                     <h1 style={{fontSize:'xxx-large'}}>Anime tattos </h1>
                     <div>
-                        <p>
-                            Instagram: <a href='https://www.instagram.com/dustinwtattoos/'>dustinwtattos</a>
+                        
+                        <p><a href='https://www.instagram.com/dustinwtattoos/'>    <img
+                           width={'25px'}
+                           height={'25px'}
+                           src={insta} /><h3 style={{display:'inline'}} > : dustinwtattos</h3></a>
                         </p>
-                    </div>
-
-                    <div>
-                        <h5 >Works:</h5>
-                        <img src={work1} alt='tattoo' className='work'/>
                     </div>
                 </div>
             </div>

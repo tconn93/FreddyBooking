@@ -38,9 +38,10 @@ function Avail(props){
         for (const avail of availabilities){
             let days =[];
             let sun = dayjs(new Date(avail.beginning_of_week));
+            sun = sun.add(1,'day');
             days.push(sun)
-            days.push( sun.add(1,'days'));
-            days.push( sun.add(2,'days'));
+            days.push( sun.add(1,'day'));
+            days.push( sun.add(2,'day'));
             days.push( sun.add(3,'day'));
             days.push( sun.add(4,'day'));
             days.push( sun.add(5,'day'));
@@ -85,13 +86,13 @@ function Avail(props){
                         <tbody>                      
                         <tr >
                             <td> edit ***</td>
-                            <td>{avail.days[0].month()+1}/{avail.days[0].date()+1}</td>
-                            <td>{avail.days[1].month()+1}/{avail.days[1].date()+1}</td>
-                            <td>{avail.days[2].month()+1}/{avail.days[2].date()+1}</td>
-                            <td>{avail.days[3].month()+1}/{avail.days[3].date()+1}</td>
-                            <td>{avail.days[4].month()+1}/{avail.days[4].date()+1}</td>
-                            <td>{avail.days[5].month()+1}/{avail.days[5].date()+1}</td>
-                            <td>{avail.days[6].month()+1}/{avail.days[6].date()+1}</td>
+                            <td>{avail.days[0].month()+1}/{avail.days[0].date()}</td>
+                            <td>{avail.days[1].month()+1}/{avail.days[1].date()}</td>
+                            <td>{avail.days[2].month()+1}/{avail.days[2].date()}</td>
+                            <td>{avail.days[3].month()+1}/{avail.days[3].date()}</td>
+                            <td>{avail.days[4].month()+1}/{avail.days[4].date()}</td>
+                            <td>{avail.days[5].month()+1}/{avail.days[5].date()}</td>
+                            <td>{avail.days[6].month()+1}/{avail.days[6].date()}</td>
                         </tr>
                         <tr >
                             <td>AM</td>

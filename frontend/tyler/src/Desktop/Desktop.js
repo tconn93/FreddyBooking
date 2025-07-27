@@ -8,7 +8,10 @@ import AdminLogin from '../Admin/AdminLogin';
 import OtherArtist from '../Admin/otherartist/OtherArtist';
 import BookRequest from '../Admin/bookrequest/BookRequest';
 import Booking from '../Admin/books/Booking';
-
+import GalleryDesk from '../Profile/gallery/GalleryDesk';
+import AboutDesk from '../Profile/about/AboutDesk';
+import ContactDesk from '../Profile/contact/ContactDesk';
+import BookingDesk from '../Profile/booking/BookingDesk';
 
 
 function Desktop(){
@@ -19,6 +22,18 @@ const router = createBrowserRouter([
         path: '/',
         element: <Profile />
        // element:<Admin  isMobile={false}/>
+    },{
+        path:'/gallery',
+        element: <GalleryDesk />
+    },{
+        path:'/about',
+        element: <AboutDesk />
+    },{
+        path:'/contact',
+        element: <ContactDesk />
+    },{
+        path:'/booking',
+        element:<BookingDesk />
     },{
         path:'/admin',
         element:<AdminLogin />

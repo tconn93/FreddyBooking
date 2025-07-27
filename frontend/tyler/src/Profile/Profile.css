@@ -6,9 +6,24 @@
 
 }
 
+.gallery{
+    width: 100%;
+    text-align: center;
+    background-color: aqua;
+    padding-top: 10px;
+}
+
 .page {
     height: calc(100vh - 220px);
     background-color: aqua;
    
 }
 
+.frame {
+    height: 2000px;
+}
+
+
+.cal-Booking table tbody tr td {
+    width: 250px;
+}

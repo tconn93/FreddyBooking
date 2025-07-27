@@ -12,6 +12,14 @@ class WebUtils {
         console.error(err);
     });
   }
+  static getArtistWithAvail(){
+    let url = this.backendURL+'avails/artist';
+    let options ={
+      method:"GET",
+      headers:{'Content-Type':'application/json'
+        ,'Access-Control-Allow-Origin':'http://localhost:3000'}  };
+    return this.pingServer(url,options);
+  }
   static getBookByArtistAndDate(artistId, dateStr){
     let url = this.backendURL+'book/artist';
     let data ={artistId:artistId, date:dateStr}
