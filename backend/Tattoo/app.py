@@ -84,6 +84,13 @@ def getArtist(artist_id):
     return artist, 200
 
 
+@app.route('/availability/<int:id>/delete',methods=['DELETE'])
+def deleteAvailability(id):
+    avail = Availability.query.get_or_404(id)
+    db.session.delete(avail)
+    db.session.commit()
+    return avail.to_dict(), 200
+
 @app.route('/availability/<int:artist_id>')
 def availability(artist_id):
     artist = Artist.query.get_or_404(artist_id)

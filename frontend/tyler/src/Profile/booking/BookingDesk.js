@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import Menu from "../../util/menu/Menu";
 import WebUtils from "../../util/web/WebUtils";
 import dayjs from "dayjs";
+import BookingSlot from "./BookingSlot";
 
 function BookingDesk(){
 
     const [artists,setArtists] = useState(undefined);
-    const [selArtist,setSelArtist] = useState(undefined);
     const [availabilities,setAvailabilities] = useState(undefined)
+
+    const [bookAvail,setBookAvail] = useState(undefined);
         useEffect(()=>{
             getArtist();
+         
         },[]);
 
-        useEffect(()=>{
-
-            if(selArtist!==undefined)
-                getArtistAvail(selArtist);
-        },[]);
-
+  
 
     async function getArtist(){
         let x = await WebUtils.getArtistWithAvail();
@@ -25,7 +23,7 @@ function BookingDesk(){
             alert('Issue geting Artist')
         } else{
             setArtists(x);
-            setSelArtist(x[0].id);
+            getArtistAvail(x[0].id);
         }
     }
 
@@ -41,10 +39,13 @@ function BookingDesk(){
     
     }
 
+    function clickBook(date,time){
+        let data = {date:date,time:time};
+        setBookAvail(data);
 
+    }
 
     function handleArtistChange(x){
-        setSelArtist(x);
         setAvailabilities(undefined)
         getArtistAvail(x);
 
@@ -95,8 +96,9 @@ function BookingDesk(){
                                     </tr>
                             </tbody>
                         </table>
+                        <div className="bar">.</div>
 
-                        {selArtist!==undefined&&availabilities!==undefined && availabilities.map((avail)=>{
+                        {availabilities!==undefined && availabilities.map((avail)=>{
                            
                            let sunday = dayjs(avail.beginning_of_week);
                            sunday = sunday.add(1,'day');
@@ -123,23 +125,23 @@ function BookingDesk(){
                                     </tr>
                                     <tr>
                                         <td>AM</td>
-                                        <td>{avail.sunday}</td>
-                                        <td>{avail.monday}</td>
-                                        <td>{avail.tuesday}</td>
-                                        <td>{avail.wednesday}</td>
-                                        <td>{avail.thursday}</td>
-                                        <td>{avail.friday}</td>
-                                        <td>{avail.saturday}</td>
+                                        <BookingSlot status={avail.sunday} book={()=>clickBook(sunday,'AM')}/>
+                                        <BookingSlot status={avail.monday} book={()=>clickBook(monday,'AM')}/>
+                                        <BookingSlot status={avail.tuesday} book={()=>clickBook(tuesday,'AM')}/>
+                                        <BookingSlot status={avail.wednesday} book={()=>clickBook(wednesday,'AM')}/>
+                                        <BookingSlot status={avail.thursday} book={()=>clickBook(thursday,'AM')}/>
+                                        <BookingSlot status={avail.friday} book={()=>clickBook(friday,'AM')}/>
+                                        <BookingSlot status={avail.saturday} book={()=>clickBook(saturday,'AM')}/>
                                     </tr>
                                     <tr>
                                         <td>PM</td>
-                                        <td>{avail.sundayPM}</td>
-                                        <td>{avail.mondayPM}</td>
-                                        <td>{avail.tuesdayPM}</td>
-                                        <td>{avail.wednesdayPM}</td>
-                                        <td>{avail.thursdayPM}</td>
-                                        <td>{avail.fridayPM}</td>
-                                        <td>{avail.saturdayPM}</td>
+                                        <BookingSlot status={avail.sundayPM} book={()=>clickBook(sunday,'PM')}/>
+                                        <BookingSlot status={avail.mondayPM} book={()=>clickBook(monday,'PM')}/>
+                                        <BookingSlot status={avail.tuesdayPM} book={()=>clickBook(tuesday,'PM')}/>
+                                        <BookingSlot status={avail.wednesdayPM} book={()=>clickBook(wednesday,'PM')}/>
+                                        <BookingSlot status={avail.thursdayPM} book={()=>clickBook(thursday,'PM')}/>
+                                        <BookingSlot status={avail.fridayPM} book={()=>clickBook(friday,'PM')}/>
+                                        <BookingSlot status={avail.saturdayPM} book={()=>clickBook(saturday,'PM')}/>
                                     </tr>
                                 </tbody>
                             </table>
@@ -147,6 +149,28 @@ function BookingDesk(){
                          )})}
 
                 </div>
+                {bookAvail!==undefined &&(
+                    <div className="bookForm">
+                        <label>Date and Time</label><br></br>
+                        {bookAvail.date.month()+1}/{bookAvail.date.date()} {bookAvail.time}
+                        <br/>
+                        <label>Name</label>
+                        <br/>
+                        <input type="text" ></input>
+                        <br/>
+                        <label>Email</label>
+                        <br/>
+                        <input type="text" />
+                        <br />
+                        <label>Phone</label>
+                        <br />
+                        <input type="text" />
+                        <br />
+                        <label>Description</label>
+                        <br />
+                        <input type="textArea"></input>
+                    </div>
+                )}
 
 
             </div>

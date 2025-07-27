@@ -12,6 +12,14 @@ class WebUtils {
         console.error(err);
     });
   }
+
+  static deleteAvail(availId){
+    let url = this.backendURL+'availability/'+availId+'/delete';
+    let options = {method:'DELETE',
+      headers:{'Content-Type':'application/json'
+        ,'Access-Control-Allow-Origin':'http://localhost:3000'}  };
+    return this.pingServer(url,options);
+  }
   static getArtistWithAvail(){
     let url = this.backendURL+'avails/artist';
     let options ={

@@ -55,6 +55,15 @@ function Avail(props){
     }
 
 
+    async function deleteAvail(availId){
+        let x = await WebUtils.deleteAvail(availId);
+        if(x=== undefined)
+            alert('Issue deleting Availability')
+        else
+            getAvails();
+    }
+
+
 
 
     if(artist===undefined){
@@ -85,7 +94,7 @@ function Avail(props){
                         <table key={avail.avail.id} >  
                         <tbody>                      
                         <tr >
-                            <td> edit ***</td>
+                            <td className="btn" onClick={()=>deleteAvail(avail.avail.id)}> Delete</td>
                             <td>{avail.days[0].month()+1}/{avail.days[0].date()}</td>
                             <td>{avail.days[1].month()+1}/{avail.days[1].date()}</td>
                             <td>{avail.days[2].month()+1}/{avail.days[2].date()}</td>

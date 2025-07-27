@@ -15,7 +15,7 @@ function EditAvail(props){
     const [artist,setArtist] = useState(undefined);
     const [avails,setAvails] = useState(undefined);
     const today = dayjs();
-    const startDay = today.subtract(7,'day');
+    const startDay = today.subtract(6,'day');
     const endDate = startDay.add(6,'month');
     const sundays = [];
     let currentDay = startDay;
