@@ -54,6 +54,7 @@ def logout():
 
 
 @app.route('/artist',methods=["POST"])
+@login_required
 def artist():
     data = request.get_json()
     if not data or 'email' not in data or 'pword' not in data or 'name' not in data or 'isOwner' not in data:
@@ -70,6 +71,7 @@ def artist():
 
 
 @app.route('/artist',methods=['GET'])
+@login_required
 def getAllArtist():
     artists = Artist.query.all()
     x = []
@@ -79,12 +81,14 @@ def getAllArtist():
 
 
 @app.route('/artist/<int:artist_id>')
+@login_required
 def getArtist(artist_id):
     artist = Artist.query.get_or_404(artist_id).to_dict()
     return artist, 200
 
 
 @app.route('/availability/<int:id>/delete',methods=['DELETE'])
+@login_required
 def deleteAvailability(id):
     avail = Availability.query.get_or_404(id)
     db.session.delete(avail)
@@ -102,6 +106,7 @@ def availability(artist_id):
     return {'artist':artist.to_dict(),'avails':x}
 
 @app.route('/availability/<int:artist_id>/edit',methods=["POST"])
+@login_required
 def save_availability(artist_id):
     try:
         data = request.get_json()
@@ -181,6 +186,7 @@ def save_availability(artist_id):
 #     return render_template('index.html')
 
 @app.route('/book/<int:id>', methods=['GET'])
+@login_required
 def book(id):
     books = Booking.query.filter_by(artist_id=id)
     x = []
@@ -208,6 +214,7 @@ def saveBookingRequest():
     return bookingRequest.to_dict() , 200 if bookingRequest.id else 201
 
 @app.route('/bookingRequest/<int:artist_id>',methods=['GET'])
+@login_required
 def getBookingRequest(artist_id):
     bookingRequests = BookingRequest.query.filter_by(artist_id=artist_id)
     x = []
@@ -243,6 +250,7 @@ def accepBooking(id):
     return jsonify(book.to_dict()), 200 if book.id else 201
 
 @app.route('/bookRequest/<int:id>',methods=['DELETE','OPTIONS'])
+@login_required
 def deleteBooking(id):
     book = BookingRequest.query.get_or_404(id)
     db.session.delete(book)

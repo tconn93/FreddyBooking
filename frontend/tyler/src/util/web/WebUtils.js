@@ -2,7 +2,7 @@
 
 
 class WebUtils {
-  static backendURL = "http://localhost:5000/";
+  static backendURL = "https://dustin.ink:5000/";
 
   static pingServer(url,options){
     return fetch(url,options)
@@ -13,11 +13,21 @@ class WebUtils {
     });
   }
 
+  static requestBooking(data){
+    let url = this.backendURL+'bookingRequest';
+    let options = {method:'POST',
+      headers:{'Content-Type':'application/json'
+        ,'Access-Control-Allow-Origin':'https://dustin.ink'},
+        body: JSON.stringify(data)
+    }
+    return this.pingServer(url,options);
+  }
+
   static deleteAvail(availId){
     let url = this.backendURL+'availability/'+availId+'/delete';
     let options = {method:'DELETE',
       headers:{'Content-Type':'application/json'
-        ,'Access-Control-Allow-Origin':'http://localhost:3000'}  };
+        ,'Access-Control-Allow-Origin':'https://dustin.ink'}  };
     return this.pingServer(url,options);
   }
   static getArtistWithAvail(){
@@ -25,7 +35,7 @@ class WebUtils {
     let options ={
       method:"GET",
       headers:{'Content-Type':'application/json'
-        ,'Access-Control-Allow-Origin':'http://localhost:3000'}  };
+        ,'Access-Control-Allow-Origin':'https://dustin.ink'}  };
     return this.pingServer(url,options);
   }
   static getBookByArtistAndDate(artistId, dateStr){
@@ -33,7 +43,7 @@ class WebUtils {
     let data ={artistId:artistId, date:dateStr}
     let options={method:'POST',
         headers:{'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000'},
+            ,'Access-Control-Allow-Origin':'https://dustin.ink'},
         body: JSON.stringify(data)};
     return this.pingServer(url,options);
   }
@@ -42,7 +52,7 @@ class WebUtils {
     let options = {
         method:'DELETE',
         headers:{'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000',
+            ,'Access-Control-Allow-Origin':'https://dustin.ink',
             'Access-Control-Allow-Methods':'DELETE'} };
     return this.pingServer(url,options);
   }
@@ -51,7 +61,7 @@ class WebUtils {
     let options ={
         method:'GET',
         headers:{'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000'} };
+            ,'Access-Control-Allow-Origin':'https://dustin.ink'} };
     return this.pingServer(url,options);
   }
   static deleteBookRequest(bookId){
@@ -59,7 +69,7 @@ class WebUtils {
     let options = {
         method:'DELETE',
         headers:{'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000',
+            ,'Access-Control-Allow-Origin':'https://dustin.ink',
             'Access-Control-Allow-Methods':'DELETE'} };
     return this.pingServer(url,options);
   }
@@ -68,7 +78,7 @@ class WebUtils {
     let options = {
         method:'POST',
         headers:{'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000'} };
+            ,'Access-Control-Allow-Origin':'https://dustin.ink'} };
     return this.pingServer(url,options);
   }
   static getBookingRequest(artistId){
@@ -76,7 +86,7 @@ class WebUtils {
     let options = {
         method:'GET',
         headers:{'Content-Type':'application/json'
-                ,'Access-Control-Allow-Origin':'http://localhost:3000'} };
+                ,'Access-Control-Allow-Origin':'https://dustin.ink'} };
     return this.pingServer(url,options);
   }
   static saveNewArtist(newArtist){
@@ -84,7 +94,7 @@ class WebUtils {
     let options = {
         method:'POST',
         headers:{'Content-Type':'application/json'
-                ,'Access-Control-Allow-Origin':'http://localhost:3000'},
+                ,'Access-Control-Allow-Origin':'https://dustin.ink'},
         body: JSON.stringify(newArtist) };
     return this.pingServer(url,options);
   }
@@ -93,7 +103,7 @@ class WebUtils {
     let options = {
         method:'POST',
         headers:{'Content-Type':'application/json'
-                ,'Access-Control-Allow-Origin':'http://localhost:3000'},
+                ,'Access-Control-Allow-Origin':'https://dustin.ink'},
         body:JSON.stringify(avail) };
     return this.pingServer(url,options);
   }
@@ -103,7 +113,7 @@ class WebUtils {
     let option = {
         method:'GET',
         headers:{'Content-Type':'application/json'
-                ,'Access-Control-Allow-Origin':'http://localhost:3000'}};
+                ,'Access-Control-Allow-Origin':'https://dustin.ink'}};
     return this.pingServer(url,option);
   }
 
@@ -112,7 +122,7 @@ class WebUtils {
     let option = { 
         method:'GET',
         headers:{'Content-Type':'application/json'
-                ,'Access-Control-Allow-Origin':'http://localhost:3000'}};
+                ,'Access-Control-Allow-Origin':'https://dustin.ink'}};
     return this.pingServer(url,option);
   }
 
@@ -122,7 +132,7 @@ class WebUtils {
         method:'GET',
         headers:{
             'Content-Type':'application/json'
-            ,'Access-Control-Allow-Origin':'http://localhost:3000'}};
+            ,'Access-Control-Allow-Origin':'https://dustin.ink'}};
     return this.pingServer(url,options);
   }
 
@@ -135,7 +145,7 @@ class WebUtils {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
-                    ,'Access-Control-Allow-Origin':'http://localhost:3000'
+                    ,'Access-Control-Allow-Origin':'https://dustin.ink'
                 },
                 body: JSON.stringify(myData) };
            return this.pingServer(url,options);

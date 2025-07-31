@@ -3,17 +3,47 @@ import Menu from "../../util/menu/Menu";
 import WebUtils from "../../util/web/WebUtils";
 import dayjs from "dayjs";
 import BookingSlot from "./BookingSlot";
+import { useNavigate } from "react-router";
 
 function BookingDesk(){
 
     const [artists,setArtists] = useState(undefined);
     const [availabilities,setAvailabilities] = useState(undefined)
+    const [email,setEmail]=useState('');
+    const [name,setName] = useState('');
+    const [desc,setDesc] = useState('');
+    const [artistId,setArtistId] = useState(0);
+    const [phone,setPhone] = useState('');
+
+    const navigate = useNavigate();
 
     const [bookAvail,setBookAvail] = useState(undefined);
         useEffect(()=>{
             getArtist();
          
         },[]);
+
+
+    async function requestBooking(){
+        let data = {
+            date:bookAvail.date.month()+1+'/'+bookAvail.date.date()+'/'+bookAvail.date.year(),
+            time:bookAvail.time,
+            email:email,
+            artistId:artistId,
+            name:name,
+            description:desc,
+            phone:phone
+        }
+
+        let x = await WebUtils.requestBooking(data);
+
+        if(x===undefined)
+            alert('Issue requesting Booking')
+        else {
+            alert('Successfully requested a booking!')
+            navigate('/')
+        }
+    }    
 
   
 
@@ -24,6 +54,8 @@ function BookingDesk(){
         } else{
             setArtists(x);
             getArtistAvail(x[0].id);
+            setArtistId(x[0].id);
+            
         }
     }
 
@@ -48,6 +80,7 @@ function BookingDesk(){
     function handleArtistChange(x){
         setAvailabilities(undefined)
         getArtistAvail(x);
+        setArtistId(x);
 
     }
 
@@ -156,19 +189,21 @@ function BookingDesk(){
                         <br/>
                         <label>Name</label>
                         <br/>
-                        <input type="text" ></input>
+                        <input type="text" value={name} onChange={(e)=>setName(e.target.value)}></input>
                         <br/>
                         <label>Email</label>
                         <br/>
-                        <input type="text" />
+                        <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
                         <br />
                         <label>Phone</label>
                         <br />
-                        <input type="text" />
+                        <input type="text" maxLength={10} value={phone} onChange={(e)=>setPhone(e.target.value)}/>
                         <br />
                         <label>Description</label>
                         <br />
-                        <input type="textArea"></input>
+                        <input type="textArea" value={desc} onChange={(e)=>{setDesc(e.target.value)}}></input>
+                        <br />
+                        <div className="btn" onClick={()=> requestBooking()}>  Book</div>
                     </div>
                 )}
 
